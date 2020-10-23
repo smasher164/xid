@@ -1,0 +1,12 @@
+# Ignore everything
+*
+# Whitelist subdirectories
+!*/
+# Whitelist the following files and extensions
+!*.yml
+!*.gz
+!.gitignore
+!go.mod
+!go.sum
+!*.md
+!*.go
