@@ -3,6 +3,7 @@ package xid
 import (
 	"bufio"
 	"compress/gzip"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -56,4 +57,48 @@ func TestExhaustive(t *testing.T) {
 			}
 		})
 	}
+}
+
+func Example() {
+	isIdent := func(input string) bool {
+		// identifier should be non-empty
+		if input == "" {
+			return false
+		}
+		for i, r := range input {
+			if i == 0 {
+				// first rune should be in xid_start
+				if !Start(r) {
+					return false
+				}
+			} else {
+				// other runes should be in xid_continue
+				if !Continue(r) {
+					return false
+				}
+			}
+		}
+		return true
+	}
+	fmt.Println(isIdent("index"))
+	fmt.Println(isIdent("snake_case"))
+	fmt.Println(isIdent("Δx"))
+	fmt.Println(isIdent("xₒ"))
+	fmt.Println(isIdent("ä"))
+	fmt.Println(isIdent("aᵢ"))
+	fmt.Println(isIdent("मूलधन"))
+	fmt.Println(isIdent("kebab-case"))
+	fmt.Println(isIdent("3x"))
+	fmt.Println(isIdent("_id"))
+	// Output:
+	// true
+	// true
+	// true
+	// true
+	// true
+	// true
+	// true
+	// false
+	// false
+	// false
 }
