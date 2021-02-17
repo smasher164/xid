@@ -1,4 +1,4 @@
-// +build go1.14
+// +build go1.14,!go1.16
 
 package xid
 
